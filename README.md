@@ -15,12 +15,9 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 - `Notes/`: 강의 학습 노트 (Markdown)
 - `assets/images/`: 노트 및 문서에서 사용하는 이미지 리소스
 - `export_obsidian_note.py`: Obsidian 노트를 저장소 형식으로 변환/복사하는 스크립트
-- `assignments/` (planned): 과제 코드 및 실습 결과 업로드 예정
+- `assignments/`: 과제 코드 및 실습 결과 업로드 예정
 
 ## Progress Checklist
-
-아래 체크리스트는 [Fall 2020 course schedule](https://15462.courses.cs.cmu.edu/fall2020/home)를 기준으로 작성했습니다.
-
 ### Lectures
 
 - [x] Lecture 01: Introduction to Computer Graphics
@@ -50,16 +47,10 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 
 ### Assignments
 
-- [ ] A0.0 (Release: Sep 1, Due: Sep 3)
-- [ ] A0.5 (Release: Sep 3, Due: Sep 10)
-- [ ] A1.0 (Release: Sep 10, Due: Sep 17)
-- [ ] A1.5 (Release: Sep 17, Due: Sep 24)
-- [ ] A2.0 (Release: Sep 24, Due: Oct 1)
-- [ ] A2.5 (Release: Oct 1, Due: Oct 15)
-- [ ] A3.0 (Release: Oct 15, Due: Oct 22)
-- [ ] A3.5 (Release: Oct 22, Due: Oct 29)
-- [ ] A4.0 (Release: Oct 29, Due: Nov 12)
-- [ ] A4.5 (Release: Nov 12, Due: Nov 19)
+- [ ] A1.0 Draw SVG
+- [ ] A2.0 MeshEdit
+- [ ] A3.0 PathTracer
+- [ ] A4.0 Animation
 
 ## Notes
 
