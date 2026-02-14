@@ -39,4 +39,4 @@ Rasterization, Ray tracing
 - Input: 3D 프리미티브(사실상 모두 삼각형)
 	- 추가 속성(ex. Color)을 가질 수도 있음
 - Output: 비트맵 이미지(깊이, 알파 등 포함 가능)
-![](../assets/images/Pasted image 20260214182846.png)
+![](../assets/images/Pasted%20image%2020260214182846.png)

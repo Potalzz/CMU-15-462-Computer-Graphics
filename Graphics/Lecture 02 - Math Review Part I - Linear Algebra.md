@@ -50,7 +50,7 @@ https://15462.courses.cs.cmu.edu/fall2020/home
 이를 2차원에서 encode해보자면, 아래와 같이 표현할 수 있다.
 *\*encode(벡터라는 추상적 대상을 특정 좌표계에 따라 숫자 형태로 표현)
 
-![](../assets/images/Pasted image 20260122172125.png)
+![](../assets/images/Pasted%20image%2020260122172125.png)
 크기는 길이 또는 반지름 r로 나타내고,
 방향은 수평면과의 각도 $\theta$로 표현한다.
 
@@ -70,7 +70,7 @@ https://15462.courses.cs.cmu.edu/fall2020/home
 극 좌표계에서의 값을 데카르트 좌표계에 적용하면 다른 벡터를 얻게 되므로 주의하자.
 
 **데카르트 좌표계에서 벡터를 포현하면 아래와 같이 표현할 수 있다.**
-![](../assets/images/Pasted image 20260122174137.png)
+![](../assets/images/Pasted%20image%2020260122174137.png)
 
 
 **벡터가 무엇인지에 대해 알아봤으니, 벡터로 실제로 무엇을 할 수 있을까 ?**
@@ -78,20 +78,20 @@ https://15462.courses.cs.cmu.edu/fall2020/home
 기본적으로 두 가지 중류의 작업이 있다.
 
 **1 - Addition**
-![](../assets/images/Pasted image 20260122174423.png)
+![](../assets/images/Pasted%20image%2020260122174423.png)
 위의 그림에서 보듯이, $u + v$의 의미는 u 방향으로 가다가 v방향으로 가라는 의미인데, 덧셈의 순서와 상관 없이 같은 결과가 나오므로 벡터의 덧셈은 **교환 법칙이 성립**된다는 사실을 알 수 있다.
 
 $u + v = v + u$
 
 **2 - Scaling**
-![](../assets/images/Pasted image 20260122174839.png)
+![](../assets/images/Pasted%20image%2020260122174839.png)
 벡터 u에 대해 스칼라 a배를 하고, 스칼라 b배를 해주던지, 스칼라 ab를 먼저 곱하고 벡터 u에 곱해주던지 결과가 같다는 사실을 알 수 있다.
 
 $a(bu) = (ab)u$
 
 벡터의 덧셈과 곱셉 두 가지에 대해 알아보았으니,
 두 가지를 함께 적용해보자.
-![](../assets/images/Pasted image 20260122175126.png)
+![](../assets/images/Pasted%20image%2020260122175126.png)
 좌측과 같이 벡터를 먼저 더하고, 스칼라 곱을 적용하던,
 우측과 같이 각각의 벡터에 스칼라 곱을 적용하고 두 벡터를 더하던 같은 결과가 나온다.
 
@@ -118,7 +118,7 @@ $a(u + v) = au + av$
 **벡터로서의 함수**
 위에서 살펴 본 화살표와 함수는 똑같이 동작한다.
 
-![](../assets/images/Pasted image 20260122180645.png)
+![](../assets/images/Pasted%20image%2020260122180645.png)
 각각의 x에 대해서 f를 평가하고, g를 평가하여 결과를 취한다.
 
 시각적으로 화살표처럼 보이지 않더라도 분명히 **함수는 벡터이다.**
@@ -134,7 +134,7 @@ $$\begin{align} u + v = (u_1, u_2) + (v_1 + v_2) = (u_1 + v_1,u_2 + v_2) \\=(v_1
 
 **Computing the Midpoint**
 
-![](../assets/images/Pasted image 20260123121402.png)
+![](../assets/images/Pasted%20image%2020260123121402.png)
 벡터 a , b의 중간 지점을 어떻게 계산할 수 있을까 ?
 
 $m = \cfrac {1}{2}(a+b)$
@@ -157,7 +157,7 @@ $=(5,3)$
 (여기서 |v|는 길이, 크기, 노름(norm) 모두 동일한 의미를 가진다.)
 
 **함수의 노름이란 단어는 무엇을 의미할까 ?**
-![](../assets/images/Pasted image 20260123123111.png)
+![](../assets/images/Pasted%20image%2020260123123111.png)
 
 직관적으로 보았을 때 좌측 벡터가 더 작은 노름 값을 가진다는 것을 알 수 있다.
 
@@ -206,7 +206,7 @@ $$\lvert \mathbf{u} \rvert = \lvert (u_1, \dots, u_n) \rvert := \sqrt{\sum_{i=1}
 즉,
 > **“각 좌표를 제곱해서 더한 뒤, 루트를 씌운 값” = 벡터의 길이**
 
-![](../assets/images/Pasted image 20260123130944.png)
+![](../assets/images/Pasted%20image%2020260123130944.png)
 
 
 ### L2 Norm of Functions
@@ -220,7 +220,7 @@ $$\|f\| := \sqrt{\int_{0}^{1} f(x)^2 \, dx}$$
  단순히 합계를 적분으로 대체했을 뿐이다.
 
 **f(x) := x$\sqrt 3$함수에 대하여 해당 그래프의 $L^2$노름 값을 구해보자.**
-![](../assets/images/Pasted image 20260123142614.png)
+![](../assets/images/Pasted%20image%2020260123142614.png)
 
 수식에 숫자를 대입하여 적분을 진행하게 되면 아래와 같은 결과가 나온다.
 $$
@@ -259,7 +259,7 @@ $$<2v, u> \space = \space 2<v,u>$$
 - $\langle au, v \rangle = a\langle u, v \rangle$
 - $\langle u+v, w \rangle = \langle u, w \rangle + \langle v, w \rangle$
 
-![](../assets/images/Pasted image 20260124171149.png)
+![](../assets/images/Pasted%20image%2020260124171149.png)
 강의에서 위 4가지에 대해서는 기하학적으로 살펴 보았지만, 마지막 속성에 대해서는 왜 그럽게 성립되는지에 대한 질문을 던진다.
 
 **직접 그림을 그려서 $\langle u+v, w \rangle = \langle u, w \rangle + \langle v, w \rangle$가 왜 성립되는지 살펴보자.**
@@ -268,7 +268,7 @@ $$<2v, u> \space = \space 2<v,u>$$
 
 계산을 용이하게 하기 위해서 **벡터 w는 지면**, **벡터 u, v, (u + v)는 막대기**라고 가정하고 그림을 그려보자.
 
-![](../assets/images/Pasted image 20260123161917.png)
+![](../assets/images/Pasted%20image%2020260123161917.png)
 
 벡터 w에 수직인 방향에서 빛이 비춰진다고 하면,
 각각의 막대기에 위와 같이 그림자가 생길 것이다.
@@ -277,7 +277,7 @@ $$<2v, u> \space = \space 2<v,u>$$
 이전에 벡터의 크기가 커지면 내적의 값이 커진다고 한 이유는, 막대기가 길어지면 그림자도 길어지고, 지면이 길어지면 곱해지는 값도 커지기 때문이다.
 
 
-![](../assets/images/Pasted image 20260123162254.png)
+![](../assets/images/Pasted%20image%2020260123162254.png)
 그림을 보면 **$(u+v)$의 그림자 길이**는 **$u$의 그림자 길이**와 **$v$의 그림자 길이**를 합친 것과 정확히 같다.
 여기에 공통적으로 **지면($w$)의 길이**만 곱해주면 되므로,
 최종적으로 $\langle u+v, w \rangle = \langle u, w \rangle + \langle v, w \rangle$라는 결과가 성립함을 알 수 있다.
@@ -287,13 +287,13 @@ $$<2v, u> \space = \space 2<v,u>$$
 $$\langle u, v \rangle := \sum_{i=1}^{n} u_i v_i$$
 위 그림에 값을 대입해 계산해보면 같은 결과가 나온다는 것을 알 수 있다.
 
-![](../assets/images/Pasted image 20260123163906.png)
+![](../assets/images/Pasted%20image%2020260123163906.png)
 
 
 **L2 Inner Project of Functions**
 함수의 노름처럼, 두 함수가 얼마나 잘 정렬되어 있는지 측정하는 내적도 정의할 수 있다.
 
-![](../assets/images/Pasted image 20260123164301.png)
+![](../assets/images/Pasted%20image%2020260123164301.png)
 
 
 **Measuring Images, Other Signals ?**
@@ -301,7 +301,7 @@ $$\langle u, v \rangle := \sum_{i=1}^{n} u_i v_i$$
 
 응용 분야에 따라 내적의 선택이 달라진다.
 
-![](../assets/images/Pasted image 20260123165211.png)
+![](../assets/images/Pasted%20image%2020260123165211.png)
 미분의 노름을 측정하여 위와 같이 흥미로운 이미지를 찾는 알고리즘을 만들 수도 있다.
 
 ### Linear Maps
@@ -325,7 +325,7 @@ $$\langle u, v \rangle := \sum_{i=1}^{n} u_i v_i$$
 - 기본 변환(회전, 이동, 크기 조절 등)을 선형 사상으로 표현 가능
 - 모든 사상은 짧은 거리/시간 동안 선형 사상으로 근사될 수 있다. (테일러 정리)
 
- ![](../assets/images/Pasted image 20260124172551.png)
+ ![](../assets/images/Pasted%20image%2020260124172551.png)
  - 원점은 원점으로 이동해야 한다.
  - 직선은 직선으로 맵핑되어야 함.
 
@@ -339,7 +339,7 @@ $$\langle u, v \rangle := \sum_{i=1}^{n} u_i v_i$$
 **스칼라 곱 보존**
 - $f(au) = a f(u)$
 
-![](../assets/images/Pasted image 20260124173337.png)
+![](../assets/images/Pasted%20image%2020260124173337.png)
 
 
 **Linear Maps in Coordinates**
@@ -353,7 +353,7 @@ $$
 즉, 고정된 벡터 집합 $a_i$들의 선형 결합(linear combination)인 경우이다.
 **입력 벡터의 각 좌표** $u_i$를 계수로 해서, 미리 정해진 벡터 $a_i$들을 섞어서 **출력 벡터를 만든다**는 의미.
 
-![](../assets/images/Pasted image 20260124183215.png)
+![](../assets/images/Pasted%20image%2020260124183215.png)
 강의에 나온 이미지를 보고, 이 그림이 왜 선형 사상에 만족하는지 차근차근 살펴보자.
 
 선형 사상(Linear Maps)는 선형성을 만족하는 **함수**라고 하였다.
@@ -402,13 +402,13 @@ $$
 결과적으로 **선형 사상에 의해 얻어지는 출력 벡터는** 고정된 벡터 집합 $a_i$들의 선형 결합으로 표현된다.
 
 ### Linear vs Affine Maps
-![](../assets/images/Pasted image 20260125144529.png)
+![](../assets/images/Pasted%20image%2020260125144529.png)
 
 
 $f(x) = ax + b$와 같은 아핀 함수는 원점을 통과하지 않기 때문에 선형 함수가 아니다.
 함수에 0을 대입해도 0이 나오지 않기 때문에 작업 내용을 보존하지 못한다.
 
-![](../assets/images/Pasted image 20260125144714.png)
+![](../assets/images/Pasted%20image%2020260125144714.png)
 아핀 함수는 선형성 조건 중 가산성(합쳐서 처리하나, 따로 처리해서 합치나 결과가 같음)을 만족하지 못하므로 선형 함수라고 볼 수 없다.
 
 나중에 아핀 함수를 선형적으로 변환하는데 적용할 수 있는 방법을 배울 것이고,
@@ -447,7 +447,7 @@ $$f(u) = u_1 a_1 + u_2 a_2$$
 ### 정규 직교 기저(Orthonormal Basis)
 >길이가 1이고, 서로 직교하는 기저 벡터들.
 
-![](../assets/images/Pasted image 20260123183321.png)
+![](../assets/images/Pasted%20image%2020260123183321.png)
 정규 직교 기저는 위 두 가지 조건을 만족해야 한다.
 - **조건 1: $i = j$ 일 때 (자기 자신과의 내적) $\rightarrow$ 1**
     - $\langle \mathbf{e}_1, \mathbf{e}_1 \rangle = 1$
@@ -472,7 +472,7 @@ $$f(u) = u_1 a_1 + u_2 a_2$$
 ### Gram-Schmidt
 > 기저 벡터 모음이 주어졌을 때, 정규 직교 기저 벡터를 얻는 알고리즘
 
-![](../assets/images/Pasted image 20260125150823.png)
+![](../assets/images/Pasted%20image%2020260125150823.png)
 벡터 $u_1$과 $u_2$가 주어짐.
 1. 벡터 하나($u_1$) 가져와서 축으로 설정하고 정규화를 통해 길이를 1로 설정. = $e_1$
 2. $e_1$ 벡터에 $u_2$를 투영하면 $e_1$방향으로의 $u_2$성분이 나오는데, 그 값을 $u_2$에서 빼주면 $e_1$과 직각인 벡터가 나온다.
@@ -527,14 +527,14 @@ $$f(x) = \sum_n a_n \cos(nx) + b_n \sin(nx)$$
 
 이것이 **푸리에 변환의 기본 개념**이다.
 
-![](../assets/images/Pasted image 20260126183421.png)
+![](../assets/images/Pasted%20image%2020260126183421.png)
 이를 통해서 우리는 위의 이미지를 기저 함수들의 선형 조합으로 **분해**할 수 있다.
 
 2π 간격으로 반복되는 함수는 사인파의 기저로 투영될 수 있습니다.
 $$cos⁡(nx),sin⁡(mx),m,n∈N$$
 두 함수는 서로 직교하며, 자연스러운 분해를 제공한다.
 
-![](../assets/images/Pasted image 20260126190639.png)
+![](../assets/images/Pasted%20image%2020260126190639.png)
 $n,m$ 값이 **작으면**  **낮은 주파수의 진동**이 발생하고,
 $n,m$ 값이 **커질수록** **높은 주파수의 진동**처럼 보인다.
 
@@ -545,7 +545,7 @@ $n,m$ 값이 **커질수록** **높은 주파수의 진동**처럼 보인다.
 ### Frequency Decomposition of Signals
 일반적으로, 신호를 서로 다른 주파수로 분산시키는 개념을 **푸리에 분해(Fourier decompositoin)** 이라고 한다.
 
-![](../assets/images/Pasted image 20260126191426.png)
+![](../assets/images/Pasted%20image%2020260126191426.png)
 이미지 처리, 렌더링, 기하학, 물리 시뮬레이션 등 모든 종류의 신호에 적용할 수 있다.
 
 
@@ -561,14 +561,14 @@ $$
 미지수는 DOFs(degrees of freedom), 방정식은 제약조건(constraints)라고도 한다.
 
 **목표:** 제약조건을 동시에 만족하는 DOFs를 찾는 것.
-![](../assets/images/Pasted image 20260127131046.png)
+![](../assets/images/Pasted%20image%2020260127131046.png)
 [간단하게 해결할 수 있다]
 
 **Linear System을 푼다는 것은 무엇을 의미할까 ?**
 
 선형 시스템을 푸는 것은 여러 아핀 부분 공간이 만나는 지점(해)을 찾는 것으로 기하학적으로 해석할 수 있다.
 
-![](../assets/images/Pasted image 20260127131845.png)
+![](../assets/images/Pasted%20image%2020260127131845.png)
 모든 선형 시스템을 풀 수 있는 것은 아니다.
 
 ### Matrices
@@ -579,7 +579,7 @@ $$
 
 하지만 행렬은 수치 계산에 매우 유용하며, 선형 사상을 행렬로 인코딩하여 효율적인 컴퓨터 계산을 가능하게 한다. 행렬-벡터 곱셈은 행렬의 열 벡터들의 선형 조합으로 이해할 수 있다.
 
-![](../assets/images/Pasted image 20260127135536.png)
+![](../assets/images/Pasted%20image%2020260127135536.png)
 위 이미지의 선형 사상을 행렬로 어떻게 인코딩할 수 있을까 ?
 
 $a$벡터를 세워서 행렬로 만들면 행렬 A는 다음과 같이 만들어진다.
