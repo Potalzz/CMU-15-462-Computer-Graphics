@@ -47,11 +47,9 @@ class ViewportImp : public Viewport {
 }; // class ViewportImp
 
 
-class ViewportRef : public Viewport {
+class ViewportRef : public ViewportImp {
  public:
-  
-  virtual void set_viewbox( float centerX, float centerY, float size );
-  virtual void update_viewbox( float dx, float dy, float scale );
+  ViewportRef() : ViewportImp() { }
 
 }; // class ViewportRef
 

@@ -136,81 +136,9 @@ class SoftwareRendererImp : public SoftwareRenderer {
 }; // class SoftwareRendererImp
 
 
-class SoftwareRendererRef : public SoftwareRenderer {
+class SoftwareRendererRef : public SoftwareRendererImp {
  public:
-
-  SoftwareRendererRef( ) : SoftwareRenderer( ) { }
-
-  // draw an svg input to render target
-  void draw_svg( SVG& svg );
-
-  // set sample rate
-  void set_sample_rate( size_t sample_rate );
-  
-  // set render target
-  void set_render_target( unsigned char* target_buffer,
-                          size_t width, size_t height );
-
- private:
-
-  // Primitive Drawing //
-
-  // Draws an SVG element
-  void draw_element( SVGElement* element );
-
-  // Draws a point
-  void draw_point( Point& p );
-
-  // Draw a line
-  void draw_line( Line& line );
-
-  // Draw a polyline
-  void draw_polyline( Polyline& polyline );
-
-  // Draw a rectangle
-  void draw_rect ( Rect& rect );
-
-  // Draw a polygon
-  void draw_polygon( Polygon& polygon );
-
-  // Draw a ellipse
-  void draw_ellipse( Ellipse& ellipse );
-
-  // Draws a bitmap image
-  void draw_image( Image& image );
-
-  // Draw a group
-  void draw_group( Group& group );
-
-  // Rasterization //
-
-  // rasterize a point
-  void rasterize_point( float x, float y, Color color );
-
-  // rasterize a line
-  void rasterize_line( float x0, float y0,
-                       float x1, float y1,
-                       Color color);
-
-  // rasterize a triangle
-  void rasterize_triangle( float x0, float y0,
-                           float x1, float y1,
-                           float x2, float y2,
-                           Color color );
-
-  // rasterize an image
-  void rasterize_image( float x0, float y0,
-                        float x1, float y1,
-                        Texture& tex );
-
-  // resolve samples to render target
-  void resolve( void );
-
-  // Helpers //
-  // HINT: you may want to have something similar //
-  std::vector<unsigned char> sample_buffer; int w; int h;
-  void fill_sample( int sx, int sy, const Color& c );
-  void fill_pixel( int x, int y, const Color& c );
+  SoftwareRendererRef( ) : SoftwareRendererImp( ) { }
 
 }; // class SoftwareRendererRef
 

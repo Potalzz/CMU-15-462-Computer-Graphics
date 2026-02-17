@@ -78,24 +78,9 @@ class Sampler2DImp : public Sampler2D {
   
 }; // class sampler2DImp
 
-class Sampler2DRef : public Sampler2D {
+class Sampler2DRef : public Sampler2DImp {
  public:
-
-  Sampler2DRef( SampleMethod method = TRILINEAR ) : Sampler2D ( method ) { }
-  
-  void generate_mips( Texture& tex, int startLevel );
-
-  Color sample_nearest(Texture& tex, 
-                       float u, float v, 
-                       int level = 0);
-
-  Color sample_bilinear(Texture& tex, 
-                        float u, float v, 
-                        int level = 0);
-
-  Color sample_trilinear(Texture& tex, 
-                         float u, float v, 
-                         float u_scale, float v_scale);
+  Sampler2DRef( SampleMethod method = TRILINEAR ) : Sampler2DImp( method ) { }
   
 }; // class sampler2DRef
 

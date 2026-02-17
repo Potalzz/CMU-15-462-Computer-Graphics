@@ -57,9 +57,6 @@ set(CMU462_DRAWSVG_HEADER
 option(DRAWSVG_BUILD_HARDWARE_RENDERER  "Build hardware implementation"  ON)
 include(hardware/hardware.cmake)
 
-# Import drawsvg reference
-include(reference/reference.cmake)
-
 #-------------------------------------------------------------------------------
 # Add executable
 #-------------------------------------------------------------------------------
@@ -69,7 +66,7 @@ add_executable( drawsvg
 )
 
 # Link drawsvg executable (static link reference solution)
-target_link_libraries( drawsvg drawsvg_hdwr drawsvg_ref
+target_link_libraries( drawsvg drawsvg_hdwr
     ${FREETYPE_LIBRARIES}
     ${OPENGL_LIBRARIES}
     CMU462 ${CMU462_LIBRARIES}
