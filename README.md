@@ -15,7 +15,7 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 - `Notes/`: 강의 학습 노트 (Markdown)
 - `assets/images/`: 노트 및 문서에서 사용하는 이미지 리소스
 - `export_obsidian_note.py`: Obsidian 노트를 저장소 형식으로 변환/복사하는 스크립트
-- `assignments/`: 과제 코드 및 실습 결과 업로드 예정
+- `assignments/`: 과제 코드 및 실습 결과
 
 ## Progress Checklist
 ### Lectures
