@@ -1,5 +1,10 @@
-# Build directory
+# Directory
 build/
+doc/
+misc/
+svg/
+CMU462/
+src/reference/
 
 # Useless files
 .DS_STORE
