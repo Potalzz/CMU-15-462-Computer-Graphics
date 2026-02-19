@@ -247,27 +247,32 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
   // 어떤 경사도의 선도 처리
   // O(length of line) 시간 복잡도
 
-  // Bresenhams's line algorithm을 통해 구현
-  int dx = abs(x1 - x0);
-  int sx = (x0 < x1) ? 1 : -1;
+  // Bresenham's line algorithm (integer grid).
+  int x = (int) std::floor(x0);
+  int y = (int) std::floor(y0);
+  int x_end = (int) std::floor(x1);
+  int y_end = (int) std::floor(y1);
 
-  int dy = -abs(y1 - y0);
-  int sy = (y0 < y1) ? 1 : -1;
-  
+  int dx = std::abs(x_end - x);
+  int sx = (x < x_end) ? 1 : -1;
+  int dy = -std::abs(y_end - y);
+  int sy = (y < y_end) ? 1 : -1;
   int err = dx + dy;
 
-  while (true) {
-    rasterize_point(x0, y0, color);
-    if (x0 == x1 && y0 == y1) break;
+  int max_steps = dx + (-dy) + 2;
+
+  for (int step = 0; step < max_steps; ++step) {
+    rasterize_point(x, y, color);
+    if (x == x_end && y == y_end) break;
+
     int e2 = 2 * err;
-    if (e2 >= dy) { 
-      err += dy; 
-      x0 += sx; 
-      
+    if (e2 >= dy) {
+      err += dy;
+      x += sx;
     }
-    if (e2 <= dx) { 
-      err += dx; 
-      y0 += sy; 
+    if (e2 <= dx) {
+      err += dx;
+      y += sy;
     }
   }
 }
