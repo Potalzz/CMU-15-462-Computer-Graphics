@@ -283,7 +283,66 @@ void SoftwareRendererImp::rasterize_triangle( float x0, float y0,
                                               Color color ) {
   // Task 3: 
   // Implement triangle rasterization
+  // 로직 순서
+  // 1. 색상 알파가 0이면 종료
+  // 2. 삼각형의 면적이 0이면 종료
+  // 3. bounding box 계산
+  // 4. bounding box 내의 픽셀에 대해 삼각형 내부에 있는지 판별
+  // 5. 내부에 있으면 해당 픽셀 color로 칠하기
 
+  // 알파가 0이면 그릴 필요 없음
+  if (color.a == 0.0f) return;
+
+  // 세 점(a, b, p)를 받아서 벡터 ab와 ap의 외적을 계산하여 점 p가 선 ab의 어느 쪽에 있는지 판단하는 람다 함수
+  // 양수면 점 p가 선 ab의 오른쪽에, 음수면 왼쪽에, 0이면 선 위에 위치
+  auto edge  = [](float ax, float ay, float bx, float by, float px, float py) {
+    float abx = bx - ax;
+    float aby = by - ay;
+    float apx = px - ax;
+    float apy = py - ay;
+
+    return (apx * aby) - (apy * abx);
+  };
+
+  // 삼각형 면적 0이면 종료
+  float area = edge(x0, y0, x1, y1, x2, y2);
+  if (fabs(area) < 1e-12f) return;
+
+  float min_x = min({x0, x1, x2});
+  float min_y = min({y0, y1, y2});
+  float max_x = max({x0, x1, x2});
+  float max_y = max({y0, y1, y2});
+
+  int x_start = max(0, (int) ceil(min_x - 0.5f));
+  int x_end   = min((int) target_w - 1, (int) floor(max_x - 0.5f));
+  int y_start = max(0, (int) ceil(min_y - 0.5f));
+  int y_end   = min((int) target_h - 1, (int) floor(max_y - 0.5f));
+
+  if (x_start > x_end || y_start > y_end) return;
+
+  const float eps = 1e-6f;
+
+  for (int y = y_start; y <= y_end; ++y) {
+    for (int x = x_start; x <= x_end; ++x) {
+      float sx = (float) x + 0.5f;
+      float sy = (float) y + 0.5f;
+
+      float e01 = edge(x0, y0, x1, y1, sx, sy);
+      float e12 = edge(x1, y1, x2, y2, sx, sy);
+      float e20 = edge(x2, y2, x0, y0, sx, sy);
+    
+      bool inside = false;
+      if (area > 0.0f) {
+        inside = (e01 >= -eps && e12 >= -eps && e20 >= -eps);
+      } else {
+        inside = (e01 <= -eps && e12 <= -eps && e20 <= -eps);
+      }
+
+      if (inside) {
+        rasterize_point(sx, sy, color);
+      }
+    }
+  }
 }
 
 void SoftwareRendererImp::rasterize_image( float x0, float y0,
