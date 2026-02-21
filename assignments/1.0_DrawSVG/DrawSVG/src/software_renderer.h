@@ -13,7 +13,8 @@ namespace CMU462 { // CMU462
 class SoftwareRenderer : public SVGRenderer {
  public:
 
-  SoftwareRenderer( ) : sample_rate (1) { }
+  SoftwareRenderer( )
+      : sample_rate(1), render_target(nullptr), target_w(0), target_h(0), sampler(nullptr) { }
 
   // Free used resources
   virtual ~SoftwareRenderer( ) { }
@@ -132,6 +133,18 @@ class SoftwareRendererImp : public SoftwareRenderer {
 
   // resolve samples to render target
   void resolve( void );
+
+  // resize supersample buffer when sample rate or target size changes
+  void resize_sample_buffer( void );
+
+  // write to one supersample (sample-space integer coordinates)
+  void fill_sample( int sx, int sy, Color color );
+
+  // write to all supersamples that belong to a pixel
+  void fill_pixel( int px, int py, Color color );
+
+  // supersample storage: target_w * target_h * sample_rate^2 colors
+  std::vector<Color> sample_buffer;
 
 }; // class SoftwareRendererImp
 

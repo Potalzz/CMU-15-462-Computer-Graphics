@@ -19,6 +19,13 @@ void SoftwareRendererImp::draw_svg( SVG& svg ) {
   // set top level transformation
   transformation = svg_2_screen;
 
+  // clear supersample storage for this frame
+  if (sample_buffer.empty()) {
+    resize_sample_buffer();
+  } else {
+    fill(sample_buffer.begin(), sample_buffer.end(), Color::White);
+  }
+
   // draw all elements
   for ( size_t i = 0; i < svg.elements.size(); ++i ) {
     draw_element(svg.elements[i]);
@@ -44,7 +51,8 @@ void SoftwareRendererImp::set_sample_rate( size_t sample_rate ) {
 
   // Task 4: 
   // You may want to modify this for supersampling support
-  this->sample_rate = sample_rate;
+  this->sample_rate = max<size_t>(1, sample_rate);
+  resize_sample_buffer();
 
 }
 
@@ -56,6 +64,7 @@ void SoftwareRendererImp::set_render_target( unsigned char* render_target,
   this->render_target = render_target;
   this->target_w = width;
   this->target_h = height;
+  resize_sample_buffer();
 
 }
 
@@ -222,19 +231,15 @@ void SoftwareRendererImp::draw_group( Group& group ) {
 
 void SoftwareRendererImp::rasterize_point( float x, float y, Color color ) {
 
-  // fill in the nearest pixel
+  // fill the nearest pixel (all sub-samples) to preserve thickness at any sample rate
   int sx = (int) floor(x);
   int sy = (int) floor(y);
 
   // check bounds
-  if ( sx < 0 || sx >= target_w ) return;
-  if ( sy < 0 || sy >= target_h ) return;
+  if ( sx < 0 || sx >= (int) target_w ) return;
+  if ( sy < 0 || sy >= (int) target_h ) return;
 
-  // fill sample - NOT doing alpha blending!
-  render_target[4 * (sx + sy * target_w)    ] = (uint8_t) (color.r * 255);
-  render_target[4 * (sx + sy * target_w) + 1] = (uint8_t) (color.g * 255);
-  render_target[4 * (sx + sy * target_w) + 2] = (uint8_t) (color.b * 255);
-  render_target[4 * (sx + sy * target_w) + 3] = (uint8_t) (color.a * 255);
+  fill_pixel(sx, sy, color);
 
 }
 
@@ -293,53 +298,55 @@ void SoftwareRendererImp::rasterize_triangle( float x0, float y0,
   // 알파가 0이면 그릴 필요 없음
   if (color.a == 0.0f) return;
 
-  // 세 점(a, b, p)를 받아서 벡터 ab와 ap의 외적을 계산하여 점 p가 선 ab의 어느 쪽에 있는지 판단하는 람다 함수
-  // 양수면 점 p가 선 ab의 오른쪽에, 음수면 왼쪽에, 0이면 선 위에 위치
-  auto edge  = [](float ax, float ay, float bx, float by, float px, float py) {
+  auto edge = [](float ax, float ay, float bx, float by, float px, float py) {
     float abx = bx - ax;
     float aby = by - ay;
     float apx = px - ax;
     float apy = py - ay;
-
-    return (apx * aby) - (apy * abx);
+    
+    return (abx * apy) - (aby * apx);
   };
 
   // 삼각형 면적 0이면 종료
-  float area = edge(x0, y0, x1, y1, x2, y2);
+  const float area = edge(x0, y0, x1, y1, x2, y2);
   if (fabs(area) < 1e-12f) return;
 
-  float min_x = min({x0, x1, x2});
-  float min_y = min({y0, y1, y2});
-  float max_x = max({x0, x1, x2});
-  float max_y = max({y0, y1, y2});
+  const float min_x = min({x0, x1, x2});
+  const float min_y = min({y0, y1, y2});
+  const float max_x = max({x0, x1, x2});
+  const float max_y = max({y0, y1, y2});
 
-  int x_start = max(0, (int) ceil(min_x - 0.5f));
-  int x_end   = min((int) target_w - 1, (int) floor(max_x - 0.5f));
-  int y_start = max(0, (int) ceil(min_y - 0.5f));
-  int y_end   = min((int) target_h - 1, (int) floor(max_y - 0.5f));
+  const float sr = (float) sample_rate;
+  const int sample_w = (int) (target_w * sample_rate);
+  const int sample_h = (int) (target_h * sample_rate);
 
-  if (x_start > x_end || y_start > y_end) return;
+  int sx_start = max(0, (int) ceil(min_x * sr - 0.5f));
+  int sx_end   = min(sample_w - 1, (int) floor(max_x * sr - 0.5f));
+  int sy_start = max(0, (int) ceil(min_y * sr - 0.5f));
+  int sy_end   = min(sample_h - 1, (int) floor(max_y * sr - 0.5f));
+
+  if (sx_start > sx_end || sy_start > sy_end) return;
 
   const float eps = 1e-6f;
 
-  for (int y = y_start; y <= y_end; ++y) {
-    for (int x = x_start; x <= x_end; ++x) {
-      float sx = (float) x + 0.5f;
-      float sy = (float) y + 0.5f;
+  for (int sy = sy_start; sy <= sy_end; ++sy) {
+    float py = ((float) sy + 0.5f) / sr;
+    for (int sx = sx_start; sx <= sx_end; ++sx) {
+      float px = ((float) sx + 0.5f) / sr;
 
-      float e01 = edge(x0, y0, x1, y1, sx, sy);
-      float e12 = edge(x1, y1, x2, y2, sx, sy);
-      float e20 = edge(x2, y2, x0, y0, sx, sy);
+      float e01 = edge(x0, y0, x1, y1, px, py);
+      float e12 = edge(x1, y1, x2, y2, px, py);
+      float e20 = edge(x2, y2, x0, y0, px, py);
     
-      bool inside = false;
-      if (area > 0.0f) {
+      bool inside;
+      if (area >= 0.0f) {
         inside = (e01 >= -eps && e12 >= -eps && e20 >= -eps);
       } else {
-        inside = (e01 <= -eps && e12 <= -eps && e20 <= -eps);
+        inside = (e01 <= eps && e12 <= eps && e20 <= eps);
       }
 
       if (inside) {
-        rasterize_point(sx, sy, color);
+        fill_sample(sx, sy, color);
       }
     }
   }
@@ -359,7 +366,72 @@ void SoftwareRendererImp::resolve( void ) {
   // Task 4: 
   // Implement supersampling
   // You may also need to modify other functions marked with "Task 4".
-  return;
+  if (render_target == nullptr || target_w == 0 || target_h == 0) return;
+
+  const size_t samples_per_pixel = sample_rate * sample_rate;
+  if (samples_per_pixel == 0 || sample_buffer.empty()) return;
+
+  const float inv_samples = 1.0f / (float) samples_per_pixel;
+  auto clamp01 = [](float x) {
+    return min(1.0f, max(0.0f, x));
+  };
+
+  for (size_t py = 0; py < target_h; ++py) {
+    for (size_t px = 0; px < target_w; ++px) {
+      size_t base = (px + py * target_w) * samples_per_pixel;
+      Color accum(0, 0, 0, 0);
+      for (size_t s = 0; s < samples_per_pixel; ++s) {
+        accum += sample_buffer[base + s];
+      }
+      accum *= inv_samples;
+
+      size_t out = 4 * (px + py * target_w);
+      render_target[out    ] = (uint8_t) (255.0f * clamp01(accum.r));
+      render_target[out + 1] = (uint8_t) (255.0f * clamp01(accum.g));
+      render_target[out + 2] = (uint8_t) (255.0f * clamp01(accum.b));
+      render_target[out + 3] = (uint8_t) (255.0f * clamp01(accum.a));
+    }
+  }
+
+}
+
+void SoftwareRendererImp::resize_sample_buffer( void ) {
+  if (target_w == 0 || target_h == 0) {
+    sample_buffer.clear();
+    return;
+  }
+
+  size_t samples_per_pixel = sample_rate * sample_rate;
+  size_t total_samples = target_w * target_h * samples_per_pixel;
+  sample_buffer.assign(total_samples, Color::White);
+}
+
+void SoftwareRendererImp::fill_sample( int sx, int sy, Color color ) {
+  if (sx < 0 || sy < 0) return;
+
+  int sample_w = (int) (target_w * sample_rate);
+  int sample_h = (int) (target_h * sample_rate);
+  if (sx >= sample_w || sy >= sample_h) return;
+
+  size_t px = (size_t) (sx / (int) sample_rate);
+  size_t py = (size_t) (sy / (int) sample_rate);
+  size_t sub_x = (size_t) (sx % (int) sample_rate);
+  size_t sub_y = (size_t) (sy % (int) sample_rate);
+  size_t samples_per_pixel = sample_rate * sample_rate;
+  size_t sample_index = (px + py * target_w) * samples_per_pixel + (sub_x + sub_y * sample_rate);
+
+  sample_buffer[sample_index] = color;
+}
+
+void SoftwareRendererImp::fill_pixel( int px, int py, Color color ) {
+  if (px < 0 || py < 0) return;
+  if (px >= (int) target_w || py >= (int) target_h) return;
+
+  size_t samples_per_pixel = sample_rate * sample_rate;
+  size_t base = ((size_t) px + (size_t) py * target_w) * samples_per_pixel;
+  for (size_t s = 0; s < samples_per_pixel; ++s) {
+    sample_buffer[base + s] = color;
+  }
 
 }
 
