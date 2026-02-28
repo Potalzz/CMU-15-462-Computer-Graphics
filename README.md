@@ -14,7 +14,6 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 
 - `Notes/`: 강의 학습 노트 (Markdown)
 - `assets/images/`: 노트 및 문서에서 사용하는 이미지 리소스
-- `export_obsidian_note.py`: Obsidian 노트를 저장소 형식으로 변환/복사하는 스크립트
 - `assignments/`: 과제 코드 및 실습 결과
 
 ## Progress Checklist
@@ -51,7 +50,3 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 - [ ] A2.0 MeshEdit
 - [ ] A3.0 PathTracer
 - [ ] A4.0 Animation
-
-## Notes
-
-이 저장소는 단순 강의 정리뿐 아니라, 이후 과제 구현 코드와 실험 기록까지 함께 관리하는 학습 아카이브로 확장할 계획입니다.
