@@ -23,12 +23,12 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 - [x] Lecture 02: Math Review Part I (Linear Algebra)
 - [x] Lecture 03: Math Review Part II (Vector Calculus)
 - [x] Lecture 04: Drawing a Triangle
-- [ ] Lecture 05: Transformation Matrices
-- [ ] Lecture 06: Model Transform
-- [ ] Lecture 07: Projection Matrices
-- [ ] Lecture 08: Rasterization
-- [ ] Lecture 09: Interpolation
-- [ ] Lecture 10: Texture Mapping
+- [x] Lecture 05: Transformation Matrices
+- [x] Lecture 06: Model Transform
+- [x] Lecture 07: Projection Matrices
+- [x] Lecture 08: Rasterization
+- [x] Lecture 09: Interpolation
+- [x] Lecture 10: Texture Mapping
 - [ ] Lecture 11: Ray Tracing
 - [ ] Lecture 12: Reflection Models
 - [ ] Lecture 13: BSP Trees and BVH
