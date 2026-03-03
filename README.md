@@ -23,26 +23,25 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 - [x] Lecture 02: Math Review Part I (Linear Algebra)
 - [x] Lecture 03: Math Review Part II (Vector Calculus)
 - [x] Lecture 04: Drawing a Triangle
-- [x] Lecture 05: Transformation Matrices
-- [x] Lecture 06: Model Transform
-- [x] Lecture 07: Projection Matrices
-- [x] Lecture 08: Rasterization
-- [x] Lecture 09: Interpolation
-- [x] Lecture 10: Texture Mapping
-- [ ] Lecture 11: Ray Tracing
-- [ ] Lecture 12: Reflection Models
-- [ ] Lecture 13: BSP Trees and BVH
-- [ ] Lecture 14: Monte Carlo Ray Tracing
-- [ ] Lecture 15: Path Tracing
-- [ ] Lecture 16: Denoising
-- [ ] Lecture 17: Radiometry
-- [ ] Lecture 18: Materials and BRDFs
-- [ ] Lecture 19: Microfacet Theory
-- [ ] Lecture 20: Sampling and Aliasing
+- [x] Lecture 05: Transformation
+- [x] Lecture 06: 3D Rotations and Complex Representations
+- [x] Lecture 07: Perspective Projection and Texture Mapping
+- [x] Lecture 08: Depth and Transparency
+- [x] Lecture 09: Introduction to Geometry
+- [x] Lecture 10: Meshes and Manifolds
+- [ ] Lecture 11: Digital Geometry Processing
+- [ ] Lecture 12: Geometric Queries
+- [ ] Lecture 13: Spatial Data Structures
+- [ ] Lecture 14: Color
+- [ ] Lecture 15: Radiometry
+- [ ] Lecture 16: The Rendering Equation
+- [ ] Lecture 17: Numerical Integration
+- [ ] Lecture 18: Monte Carlo Rendering
+- [ ] Lecture 19: Variance Reduction
+- [ ] Lecture 20: Intro to Animation
 - [ ] Lecture 21: Real-Time Shading
-- [ ] Lecture 22: Geometry 1
-- [ ] Lecture 23: Geometry 2
-- [ ] Lecture 24: Animation
+- [ ] Lecture 22: Optimization
+- [ ] Lecture 23: Physically Based Animation and PDEs
 
 ### Assignments
 
