@@ -51,8 +51,6 @@ https://15462.courses.cs.cmu.edu/fall2020/home
 - 내부/외부 판정 쉬움: 주어진 점을 함수에 대입해 부호나 값을 확인하면 됨.
 
 ![](../assets/images/Pasted%20image%2020260303114617.png)
-예로 $f(x,y,z)=x^2+y^2+z^2-1$에 대해 점 $\left(\frac34,\frac12,\frac14\right)$는  
-$\frac{9}{16}+\frac{4}{16}+\frac{1}{16}=\frac78<1$이므로 단위 구 내부로 분류됨.  
 
 ### 대표적 암시적 기법
 

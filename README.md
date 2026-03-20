@@ -29,19 +29,19 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 - [x] Lecture 08: Depth and Transparency
 - [x] Lecture 09: Introduction to Geometry
 - [x] Lecture 10: Meshes and Manifolds
-- [ ] Lecture 11: Digital Geometry Processing
-- [ ] Lecture 12: Geometric Queries
-- [ ] Lecture 13: Spatial Data Structures
-- [ ] Lecture 14: Color
-- [ ] Lecture 15: Radiometry
-- [ ] Lecture 16: The Rendering Equation
-- [ ] Lecture 17: Numerical Integration
-- [ ] Lecture 18: Monte Carlo Rendering
-- [ ] Lecture 19: Variance Reduction
-- [ ] Lecture 20: Intro to Animation
-- [ ] Lecture 21: Real-Time Shading
-- [ ] Lecture 22: Optimization
-- [ ] Lecture 23: Physically Based Animation and PDEs
+- [x] Lecture 11: Digital Geometry Processing
+- [x] Lecture 12: Geometric Queries
+- [x] Lecture 13: Spatial Data Structures
+- [x] Lecture 14: Color
+- [x] Lecture 15: Radiometry
+- [x] Lecture 16: The Rendering Equation
+- [x] Lecture 17: Numerical Integration
+- [x] Lecture 18: Monte Carlo Rendering
+- [x] Lecture 19: Variance Reduction
+- [x] Lecture 20: Intro to Animation
+- [x] Lecture 21: Real-Time Shading
+- [x] Lecture 22: Optimization
+- [x] Lecture 23: Physically Based Animation and PDEs
 
 ### Assignments
 

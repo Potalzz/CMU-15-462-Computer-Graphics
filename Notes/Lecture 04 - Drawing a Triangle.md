@@ -16,7 +16,7 @@ https://15462.courses.cs.cmu.edu/fall2020/home
 Rasterization, Ray tracing
 
 **Rasterization**
-기본적으로 각 기본 요소에 대해 각 삼각형을 그리라는 의미.
+>삼각형이 화면에서 어떤 픽셀을 덮는지 결정하는 단계
 - 각 **삼각형**에 대해 어떤 픽셀이 밝아져야 할까 ?
 - 매초 수십억 개의 삼각형을 표시할 수 있음.
 - 단점)실사 이미지나 실사 조명효과를 생성하기 어려움.
@@ -24,7 +24,7 @@ Rasterization, Ray tracing
  
 
 **Ray tracing**
-광선 추척을 기반으로 사실적인 렌더링 수행
+>광선 추척을 기반으로 사실적인 렌더링 수행
 - 각 **픽셀**에 대해, 어떤 프리미티브이 보이는지 확인.
 - 실사에 가까운 이미지 생성을 쉽게 만들어 줌
 - 속도가 느림
@@ -44,12 +44,33 @@ Rasterization, Ray tracing
 
 
 ## Raterization Pipeline
-
 현대의 실시간 이미지 생성을 래스터화를 기반으로 한다.
 - Input: 3D 프리미티브(사실상 모두 삼각형)
 	- 추가 속성(ex. Color)을 가질 수도 있음
 - Output: 비트맵 이미지(깊이, 알파 등 포함 가능)
 ![](../assets/images/Pasted%20image%2020260214182846.png)
+
+```text
+CPU가 삼각형 정의
+      ↓
+Vertex Shader가 화면 좌표로 변환
+      ↓
+Rasterizer가 픽셀 후보 생성
+      ↓
+Fragment Shader가 색 계산
+      ↓
+Depth Test / Blending
+      ↓
+Framebuffer에 기록
+```
+
+- 삼각형은 CPU/엔진이 생성
+    
+- Vertex Shader가 위치를 화면으로 변환
+    
+- Rasterization은 “삼각형을 픽셀 후보로 분해”
+    
+- Fragment Shader가 “색 결정”
 
 
 ### 왜 삼각형인가 ?

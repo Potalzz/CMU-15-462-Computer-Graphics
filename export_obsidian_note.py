@@ -10,6 +10,7 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+from urllib.parse import unquote
 
 IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".tiff", ".tif", ".svg"}
 
@@ -82,22 +83,31 @@ def resolve_image_source(
     if not is_image_path(raw_path):
         return None
 
-    p = Path(raw_path)
+    # Try both raw and URL-decoded forms because markdown links in notes
+    # often store spaces as %20 while files on disk contain literal spaces.
+    candidate_paths: List[str] = []
+    for cand in (raw_path, unquote(raw_path)):
+        cand = cand.strip()
+        if cand and cand not in candidate_paths:
+            candidate_paths.append(cand)
 
-    # 1) path relative to md file
-    cand1 = (source_md.parent / p).resolve()
-    if cand1.exists() and cand1.is_file():
-        return cand1
+    for cand_path in candidate_paths:
+        p = Path(cand_path)
 
-    # 2) path relative to vault root
-    cand2 = (vault_root / p).resolve()
-    if cand2.exists() and cand2.is_file():
-        return cand2
+        # 1) path relative to md file
+        cand1 = (source_md.parent / p).resolve()
+        if cand1.exists() and cand1.is_file():
+            return cand1
 
-    # 3) filename search in vault
-    cand3 = find_file_by_name(vault_root, p.name)
-    if cand3:
-        return cand3.resolve()
+        # 2) path relative to vault root
+        cand2 = (vault_root / p).resolve()
+        if cand2.exists() and cand2.is_file():
+            return cand2
+
+        # 3) filename search in vault
+        cand3 = find_file_by_name(vault_root, p.name)
+        if cand3:
+            return cand3.resolve()
 
     return None
 
@@ -118,7 +128,7 @@ def copy_or_move(src: Path, dest: Path, mode: str, dry_run: bool) -> None:
 def make_repo_relative_image_link(exported_md_path: Path, target_img_path: Path) -> str:
     # We want link in exported md relative to its location.
     rel = os.path.relpath(target_img_path.resolve(), exported_md_path.parent.resolve()).replace("\\", "/")
-    return rel
+    return rel.replace(" ", "%20")
 
 def export_note(cfg: ExportConfig) -> Tuple[Path, int, int]:
     """
