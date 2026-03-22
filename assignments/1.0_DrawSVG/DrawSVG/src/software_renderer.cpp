@@ -361,6 +361,36 @@ void SoftwareRendererImp::rasterize_image( float x0, float y0,
                                            Texture& tex ) {
   // Task 6: 
   // Implement image rasterization
+  if (sampler == nullptr || tex.mipmap.empty()) return;
+  if (fabs(x1 - x0) < 1e-12f || fabs(y1 - y0) < 1e-12f) return;
+
+  float min_x = min(x0, x1);
+  float max_x = max(x0, x1);
+  float min_y = min(y0, y1);
+  float max_y = max(y0, y1);
+
+  float sr = (float) sample_rate;
+  int sample_w = (int) (target_w * sample_rate);
+  int sample_h = (int) (target_h * sample_rate);
+
+  int sx_start = max(0, (int) ceil(min_x * sr - 0.5f));
+  int sx_end   = min(sample_w - 1, (int) floor(max_x * sr - 0.5f));
+  int sy_start = max(0, (int) ceil(min_y * sr - 0.5f));
+  int sy_end   = min(sample_h - 1, (int) floor(max_y * sr - 0.5f));
+
+  if (sx_start > sx_end || sy_start > sy_end) return;
+
+  for (int sy = sy_start; sy <= sy_end; ++sy) {
+    float py = ((float) sy + 0.5f) / sr;
+    float v = (py - y0) / (y1 - y0);
+
+    for (int sx = sx_start; sx <= sx_end; ++sx) {
+      float px = ((float) sx + 0.5f) / sr;
+      float u = (px - x0) / (x1 - x0);
+
+      fill_sample(sx, sy, sampler->sample_bilinear(tex, u, v, 0));
+    }
+  }
 
 }
 
