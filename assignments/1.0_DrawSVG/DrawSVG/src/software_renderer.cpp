@@ -11,6 +11,18 @@ using namespace std;
 
 namespace CMU462 {
 
+static inline Color premultiply_alpha(Color color) {
+  return Color(color.r * color.a, color.g * color.a, color.b * color.a, color.a);
+}
+
+static inline Color source_over(const Color& src, const Color& dst) {
+  float one_minus_src_a = 1.0f - src.a;
+  return Color(src.r + dst.r * one_minus_src_a,
+               src.g + dst.g * one_minus_src_a,
+               src.b + dst.b * one_minus_src_a,
+               src.a + dst.a * one_minus_src_a);
+}
+
 
 // Implements SoftwareRenderer //
 
@@ -424,6 +436,16 @@ void SoftwareRendererImp::resolve( void ) {
       }
       accum *= inv_samples;
 
+      if (accum.a > 0.0f) {
+        accum.r /= accum.a;
+        accum.g /= accum.a;
+        accum.b /= accum.a;
+      } else {
+        accum.r = 0.0f;
+        accum.g = 0.0f;
+        accum.b = 0.0f;
+      }
+
       size_t out = 4 * (px + py * target_w);
       render_target[out    ] = (uint8_t) (255.0f * clamp01(accum.r));
       render_target[out + 1] = (uint8_t) (255.0f * clamp01(accum.g));
@@ -459,17 +481,23 @@ void SoftwareRendererImp::fill_sample( int sx, int sy, Color color ) {
   size_t samples_per_pixel = sample_rate * sample_rate;
   size_t sample_index = (px + py * target_w) * samples_per_pixel + (sub_x + sub_y * sample_rate);
 
-  sample_buffer[sample_index] = color;
+  if (color.a <= 0.0f) return;
+
+  Color src = premultiply_alpha(color);
+  sample_buffer[sample_index] = source_over(src, sample_buffer[sample_index]);
 }
 
 void SoftwareRendererImp::fill_pixel( int px, int py, Color color ) {
   if (px < 0 || py < 0) return;
   if (px >= (int) target_w || py >= (int) target_h) return;
 
+  if (color.a <= 0.0f) return;
+
   size_t samples_per_pixel = sample_rate * sample_rate;
   size_t base = ((size_t) px + (size_t) py * target_w) * samples_per_pixel;
+  Color src = premultiply_alpha(color);
   for (size_t s = 0; s < samples_per_pixel; ++s) {
-    sample_buffer[base + s] = color;
+    sample_buffer[base + s] = source_over(src, sample_buffer[base + s]);
   }
 
 }
