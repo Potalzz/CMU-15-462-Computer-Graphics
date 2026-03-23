@@ -45,7 +45,7 @@ This repository contains my personal study records based on **CMU 15-462 (Comput
 
 ### Assignments
 
-- [ ] A1.0 Draw SVG
+- [x] A1.0 Draw SVG
 - [ ] A2.0 MeshEdit
 - [ ] A3.0 PathTracer
 - [ ] A4.0 Animation
