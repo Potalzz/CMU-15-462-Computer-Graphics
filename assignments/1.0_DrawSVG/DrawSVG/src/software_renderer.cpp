@@ -359,8 +359,8 @@ void SoftwareRendererImp::rasterize_triangle( float x0, float y0,
 void SoftwareRendererImp::rasterize_image( float x0, float y0,
                                            float x1, float y1,
                                            Texture& tex ) {
-  // Task 6: 
-  // Implement image rasterization
+  // Task 6 / Task 7:
+  // Rasterize the image rectangle and sample from the mip hierarchy.
   if (sampler == nullptr || tex.mipmap.empty()) return;
   if (fabs(x1 - x0) < 1e-12f || fabs(y1 - y0) < 1e-12f) return;
 
@@ -380,6 +380,11 @@ void SoftwareRendererImp::rasterize_image( float x0, float y0,
 
   if (sx_start > sx_end || sy_start > sy_end) return;
 
+  float image_w = fabs(x1 - x0);
+  float image_h = fabs(y1 - y0);
+  float u_scale = (float) tex.mipmap[0].width  / (image_w * sr);
+  float v_scale = (float) tex.mipmap[0].height / (image_h * sr);
+
   for (int sy = sy_start; sy <= sy_end; ++sy) {
     float py = ((float) sy + 0.5f) / sr;
     float v = (py - y0) / (y1 - y0);
@@ -388,7 +393,7 @@ void SoftwareRendererImp::rasterize_image( float x0, float y0,
       float px = ((float) sx + 0.5f) / sr;
       float u = (px - x0) / (x1 - x0);
 
-      fill_sample(sx, sy, sampler->sample_bilinear(tex, u, v, 0));
+      fill_sample(sx, sy, sampler->sample_trilinear(tex, u, v, u_scale, v_scale));
     }
   }
 

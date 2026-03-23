@@ -48,6 +48,7 @@ void Sampler2DImp::generate_mips(Texture& tex, int startLevel) {
   // check start level
   if ( startLevel >= tex.mipmap.size() ) {
     std::cerr << "Invalid start level"; 
+    return;
   }
 
   // allocate sublevels
@@ -74,15 +75,23 @@ void Sampler2DImp::generate_mips(Texture& tex, int startLevel) {
 
   }
 
-  // fill all 0 sub levels with interchanging colors (JUST AS A PLACEHOLDER)
-  Color colors[3] = { Color(1,0,0,1), Color(0,1,0,1), Color(0,0,1,1) };
-  for(size_t i = 1; i < tex.mipmap.size(); ++i) {
+  for (size_t level = startLevel + 1; level < tex.mipmap.size(); ++level) {
+    const MipLevel& parent = tex.mipmap[level - 1];
+    MipLevel& mip = tex.mipmap[level];
 
-    Color c = colors[i % 3];
-    MipLevel& mip = tex.mipmap[i];
+    for (size_t y = 0; y < mip.height; ++y) {
+      for (size_t x = 0; x < mip.width; ++x) {
+        Color accum(0, 0, 0, 0);
+        accum += texel_to_color(parent, (int) (2 * x),     (int) (2 * y));
+        accum += texel_to_color(parent, (int) (2 * x + 1), (int) (2 * y));
+        accum += texel_to_color(parent, (int) (2 * x),     (int) (2 * y + 1));
+        accum += texel_to_color(parent, (int) (2 * x + 1), (int) (2 * y + 1));
+        accum *= 0.25f;
 
-    for(size_t i = 0; i < 4 * mip.width * mip.height; i += 4) {
-      float_to_uint8( &mip.texels[i], &c.r );
+        float rgba[4] = { accum.r, accum.g, accum.b, accum.a };
+        size_t offset = 4 * (x + y * mip.width);
+        float_to_uint8(&mip.texels[offset], rgba);
+      }
     }
   }
 
@@ -156,9 +165,28 @@ Color Sampler2DImp::sample_trilinear(Texture& tex,
                                      float u_scale, float v_scale) {
 
   // Task 7: Implement trilinear filtering
+  if (tex.mipmap.empty()) {
+    return Color(1,0,1,1);
+  }
 
-  // return magenta for invalid level
-  return Color(1,0,1,1);
+  float scale = max(u_scale, v_scale);
+  scale = max(scale, 1e-8f);
+
+  float level = log2f(scale);
+  level = max(0.0f, level);
+
+  int low_level = (int) floor(level);
+  int high_level = min((int) tex.mipmap.size() - 1, low_level + 1);
+  low_level = min(low_level, (int) tex.mipmap.size() - 1);
+
+  if (low_level == high_level) {
+    return sample_bilinear(tex, u, v, low_level);
+  }
+
+  float t = level - low_level;
+  Color low = sample_bilinear(tex, u, v, low_level);
+  Color high = sample_bilinear(tex, u, v, high_level);
+  return low * (1.0f - t) + high * t;
 
 }
 
